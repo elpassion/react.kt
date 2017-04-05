@@ -37,9 +37,8 @@ kotlinFrontend {
     }
 
     webpackBundle {
-        publicPath = "/frontend/"
-        port = 8080
-        proxyUrl = "http://localhost:9090"
+        bundleName = "main"
+        contentPath = file('src/web')
     }
 }
 
