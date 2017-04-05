@@ -1,4 +1,4 @@
-rootProject.name = 'thinkter'
+rootProject.name = 'react.kt'
 
 include "backend", "frontend"
 
