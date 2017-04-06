@@ -48,6 +48,7 @@ class TodoMVC : ReactDOMComponent<ReactComponentNoProps, TodoMVC.State>() {
                             }
                     }
                 }
+                footer("footer") { +"todo: some status info..." }
             }
         }
     }
