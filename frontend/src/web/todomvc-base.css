@@ -129,13 +129,3 @@ hr {
 	transition-duration: 500ms;
 }
 
-@media (min-width: 899px) {
-	.learn-bar {
-		width: auto;
-		padding-left: 300px;
-	}
-
-	.learn-bar > .learn {
-		left: 8px;
-	}
-}

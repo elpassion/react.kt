@@ -18,10 +18,6 @@ kotlinFrontend {
     sourceMaps = false
 
     npm {
-        replaceVersion("kotlinx-html-js", "1.1.0")
-        replaceVersion("kotlinx-html-shared", "1.1.0")
-        replaceVersion("kotlin-js-library", "1.1.0")
-
         dependency("react")
         dependency("react-dom")
         dependency("react-router")

@@ -1,6 +1,7 @@
-package org.jetbrains.demo.thinkter
+package org.jetbrains.demo.todomvc
 
 import kotlinx.html.*
+import org.jetbrains.demo.todomvc.TodoItem
 import react.RState
 import react.ReactComponentNoProps
 import react.ReactComponentSpec

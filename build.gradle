@@ -20,15 +20,12 @@ subprojects { p ->
 
 subprojects {
     ext.kotlin_version = "1.1.1"
-    ext.html_version = "0.6.2"
-    ext.ktor_version = "0.3.0"
+    ext.html_version = "0.6.3"
     ext.squash_version = "0.2.2"
 
     repositories {
         mavenLocal()
         jcenter()
         maven { url "http://dl.bintray.com/kotlin/kotlinx.html" }
-        maven { url "http://dl.bintray.com/kotlin/ktor" }
-        maven { url "https://dl.bintray.com/kotlin/squash" }
     }
 }

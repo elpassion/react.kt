@@ -1,4 +1,4 @@
-package org.jetbrains.demo.thinkter
+package org.jetbrains.demo.todomvc
 
 import kotlinx.html.*
 import kotlinx.html.js.onChangeFunction
@@ -16,17 +16,14 @@ class TodoItem : ReactDOMComponent<TodoItem.Props, ReactComponentNoState>() {
 
     override fun ReactDOMBuilder.render() {
         li {
-            input {
-                classes = setOf("edit")
+            input(classes = "edit") {
                 value = props.text
                 onChangeFunction = { props.updateTodoItem(props.id, it.inputValue) }
             }
-            button {
-                classes = setOf("destroy")
+            button(classes = "destroy") {
                 onClickFunction = { props.removeTodoItem(props.id) }
             }
-            button {
-                classes = setOf("destroy", "add")
+            button(classes = "destroy add") {
                 onClickFunction = { props.appendTodoItem(props.id) }
             }
         }

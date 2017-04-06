@@ -4,6 +4,7 @@ import kotlinx.html.*
 import kotlinx.html.js.*
 import org.jetbrains.demo.thinkter.model.*
 import org.jetbrains.demo.tictactoe.TicTacToeApp
+import org.jetbrains.demo.todomvc.TodoMVC
 import react.*
 import react.dom.*
 import kotlin.browser.*
