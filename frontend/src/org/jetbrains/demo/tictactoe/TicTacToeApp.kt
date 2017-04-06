@@ -16,29 +16,9 @@ class TicTacToeApp : ReactDOMComponent<ReactComponentNoProps, TicTacToeState>() 
                 +"Tic Tac Toe"
             }
             div("board") {
-                Square {
-                    value = if (state.history[0]) 'X' else 'O'
-                    onClick = {
-                        setState {
-                            history = booleanArrayOf(true, false, false)
-                        }
-                    }
-                }
-                Square {
-                    value = if (state.history[1]) 'X' else 'O'
-                    onClick = {
-                        setState {
-                            history = booleanArrayOf(false, true, false)
-                        }
-                    }
-                }
-                Square {
-                    value = if (state.history[2]) 'X' else 'O'
-                    onClick = {
-                        setState {
-                            history = booleanArrayOf(false, false, true)
-                        }
-                    }
+                Board {
+                    squares = CharArray(3)
+                    onClick = {}
                 }
             }
         }
