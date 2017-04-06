@@ -17,7 +17,7 @@ class TicTacToeApp : ReactDOMComponent<ReactComponentNoProps, TicTacToeState>() 
             }
             div("board") {
                 Board {
-                    squares = state.history.first().squares
+                    squares = state.history.last().squares
                     onClick = { handleClick(it) }
                 }
             }
@@ -31,7 +31,7 @@ class TicTacToeApp : ReactDOMComponent<ReactComponentNoProps, TicTacToeState>() 
         //TODO: calculate winner
         squares[i] = if (state.xIsNext) 'X' else 'O'
         setState {
-            this.history = history.apply { first().squares = squares }
+            this.history = history.apply { last().squares = squares }
             stepNumber = history.size
             xIsNext = !state.xIsNext
         }
