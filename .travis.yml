@@ -1,5 +1,2 @@
 dist: trusty
 language: java
-
-script:
- - ./gradlew run
