@@ -1,6 +1,7 @@
 package org.jetbrains.demo.tictactoe
 
 import kotlinx.html.div
+import kotlinx.html.h1
 import react.RState
 import react.ReactComponentNoProps
 import react.ReactComponentSpec
@@ -36,7 +37,7 @@ class TicTacToeApp : ReactDOMComponent<ReactComponentNoProps, TicTacToeState>() 
     }
 
     private fun handleClick(i: Int) {
-        if (state.history.last().squares[i] == undefined) {
+        if (state.history.last().squares[i] == ' ') {
             val history = state.history.sliceArray(0..state.stepNumber + 1)
             val current = history.last()
             val squares = current.squares.copyOf()
@@ -59,7 +60,7 @@ class TicTacToeApp : ReactDOMComponent<ReactComponentNoProps, TicTacToeState>() 
     }
 
     init {
-        state = TicTacToeState(Array(9, { History(charArrayOf()) }), 0, true)
+        state = TicTacToeState(Array(9, { History(charArrayOf(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ')) }), 0, true)
     }
 }
 
