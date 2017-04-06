@@ -7,6 +7,17 @@ import react.ReactComponentSpec
 import react.dom.ReactDOMBuilder
 import react.dom.ReactDOMComponent
 
+val LINES = arrayOf(
+        intArrayOf(0, 1, 2),
+        intArrayOf(3, 4, 5),
+        intArrayOf(6, 7, 8),
+        intArrayOf(0, 3, 6),
+        intArrayOf(1, 4, 7),
+        intArrayOf(2, 5, 8),
+        intArrayOf(0, 4, 8),
+        intArrayOf(2, 4, 6)
+)
+
 class TicTacToeApp : ReactDOMComponent<ReactComponentNoProps, TicTacToeState>() {
     companion object : ReactComponentSpec<TicTacToeApp, ReactComponentNoProps, TicTacToeState>
 
@@ -29,7 +40,6 @@ class TicTacToeApp : ReactDOMComponent<ReactComponentNoProps, TicTacToeState>() 
             val history = state.history.sliceArray(0..state.stepNumber + 1)
             val current = history.last()
             val squares = current.squares.copyOf()
-            //TODO: calculate winner
             squares[i] = if (state.xIsNext) 'X' else 'O'
             setState {
                 this.history = history.apply { last().squares = squares }
@@ -37,12 +47,29 @@ class TicTacToeApp : ReactDOMComponent<ReactComponentNoProps, TicTacToeState>() 
                 xIsNext = !state.xIsNext
             }
             render()
+            val result = calculateWinner(current.squares)
+            if (result == null) {
+                val next = if (state.xIsNext) 'O' else 'X'
+                println("Next player: " + next)
+            } else {
+                println("Winner: " + result)
+                //TODO: End game
+            }
         }
     }
 
     init {
         state = TicTacToeState(Array(9, { History(charArrayOf()) }), 0, true)
     }
+}
+
+fun calculateWinner(squares: CharArray): Char? {
+    LINES.forEach { (a, b, c) ->
+        if (squares[a] == squares[b] && squares[a] == squares[c]) {
+            return squares[a]
+        }
+    }
+    return null
 }
 
 class TicTacToeState(var history: Array<History>, var stepNumber: Int, var xIsNext: Boolean) : RState
