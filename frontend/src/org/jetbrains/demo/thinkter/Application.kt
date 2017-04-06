@@ -14,7 +14,16 @@ fun main(args: Array<String>) {
 
     ReactDOM.render(document.getElementById("content")) {
         div {
-            TicTacToeApp {}
+            table {
+                tbody {
+                    tr {
+                        td("tic") { TicTacToeApp {} }
+                        td("tic") { TicTacToeApp {} }
+                        td("tic") { TicTacToeApp {} }
+                    }
+                }
+            }
+            TodoMVC {}
             TodoMVC {}
         }
     }
@@ -139,7 +148,7 @@ class Application : ReactDOMComponent<ReactComponentNoProps, ApplicationPageStat
     private fun checkUserSession() {
         checkSession().then(
                 { user -> onUserAssigned(user) },
-                { t ->
+                {
                     setState {
                         selected = MainView.Home
                     }
