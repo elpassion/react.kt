@@ -3,16 +3,17 @@ package org.jetbrains.demo.thinkter
 import kotlinx.html.*
 import kotlinx.html.js.*
 import org.jetbrains.demo.thinkter.model.*
+import org.jetbrains.demo.tictactoe.TicTacToeApp
 import react.*
 import react.dom.*
 import kotlin.browser.*
 
 fun main(args: Array<String>) {
-    runtime.wrappers.require("pure-blog.css")
+//    runtime.wrappers.require("pure-blog.css")
 
     ReactDOM.render(document.getElementById("content")) {
         div {
-            Application {}
+            TicTacToeApp {}
         }
     }
 }
