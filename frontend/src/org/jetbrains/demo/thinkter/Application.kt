@@ -14,6 +14,7 @@ fun main(args: Array<String>) {
     ReactDOM.render(document.getElementById("content")) {
         div {
             TicTacToeApp {}
+            TodoMVC {}
         }
     }
 }
