@@ -25,17 +25,19 @@ class TicTacToeApp : ReactDOMComponent<ReactComponentNoProps, TicTacToeState>() 
     }
 
     private fun handleClick(i: Int) {
-        val history = state.history.sliceArray(0..state.stepNumber + 1)
-        val current = history.last()
-        val squares = current.squares.copyOf()
-        //TODO: calculate winner
-        squares[i] = if (state.xIsNext) 'X' else 'O'
-        setState {
-            this.history = history.apply { last().squares = squares }
-            stepNumber = history.size
-            xIsNext = !state.xIsNext
+        if (state.history.last().squares[i] == undefined) {
+            val history = state.history.sliceArray(0..state.stepNumber + 1)
+            val current = history.last()
+            val squares = current.squares.copyOf()
+            //TODO: calculate winner
+            squares[i] = if (state.xIsNext) 'X' else 'O'
+            setState {
+                this.history = history.apply { last().squares = squares }
+                stepNumber = history.size
+                xIsNext = !state.xIsNext
+            }
+            render()
         }
-        render()
     }
 
     init {
