@@ -1,2 +1,5 @@
 dist: trusty
 language: java
+
+script:
+ - ./gradlew check --stacktrace --debug
