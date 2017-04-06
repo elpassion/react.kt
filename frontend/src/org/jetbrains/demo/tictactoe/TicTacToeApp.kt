@@ -18,10 +18,14 @@ class TicTacToeApp : ReactDOMComponent<ReactComponentNoProps, TicTacToeState>() 
             div("board") {
                 Board {
                     squares = CharArray(3)
-                    onClick = {}
+                    onClick = { handleClick(it) }
                 }
             }
         }
+    }
+
+    private fun handleClick(i: Int) {
+        //TODO: update history
     }
 
     init {
