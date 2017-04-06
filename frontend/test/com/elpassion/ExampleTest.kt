@@ -6,7 +6,7 @@ import kotlin.test.*
 class ExampleTest {
 
     @Test
-    fun shouldPass() {
-        assertTrue(true)
+    fun shouldFail() {
+        assertTrue(false)
     }
 }
