@@ -223,16 +223,28 @@ body {
 	margin: auto 0;
 	font-size: 30px;
 	color: #cc9a9a;
-	margin-bottom: 11px;
 	transition: color 0.2s ease-out;
+}
+
+.todo-list li .destroy.add {
+	right: 40px;
+	color: #a4c5cc;
 }
 
 .todo-list li .destroy:hover {
 	color: #af5b5e;
 }
 
+.todo-list li .destroy.add:hover {
+	color: #4874af;
+}
+
 .todo-list li .destroy:after {
 	content: '×';
+}
+
+.todo-list li .add.destroy:after {
+	content: '+';
 }
 
 .todo-list li:hover .destroy {
@@ -240,7 +252,7 @@ body {
 }
 
 .todo-list li .edit {
-	display: none;
+	display: inline;
 }
 
 .todo-list li.editing:last-child {

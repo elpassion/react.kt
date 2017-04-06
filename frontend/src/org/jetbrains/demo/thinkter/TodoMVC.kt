@@ -1,8 +1,6 @@
 package org.jetbrains.demo.thinkter
 
-import kotlinx.html.div
-import kotlinx.html.h4
-import kotlinx.html.ol
+import kotlinx.html.*
 import react.RState
 import react.ReactComponentNoProps
 import react.ReactComponentSpec
@@ -13,7 +11,7 @@ class TodoMVC : ReactDOMComponent<ReactComponentNoProps, TodoMVC.State>() {
     companion object : ReactComponentSpec<TodoMVC, ReactComponentNoProps, State>
 
     init {
-        state = State(listOf("write code", "eat", "sleep", "repeat"))
+        state = State(listOf("eat", "write code", "eat some more", "write more code", "sleep", "repeat"))
     }
 
     fun handleAppendTodoItem(nr: Int) {
@@ -33,17 +31,23 @@ class TodoMVC : ReactDOMComponent<ReactComponentNoProps, TodoMVC.State>() {
     }
 
     override fun ReactDOMBuilder.render() {
-        div {
-            h4 { +"Todo list:" }
-            ol {
-                for ((i, t) in state.todos.withIndex())
-                    TodoItem {
-                        id = i
-                        text = t
-                        appendTodoItem = this@TodoMVC::handleAppendTodoItem
-                        updateTodoItem = this@TodoMVC::handleUpdateTodoItem
-                        removeTodoItem = this@TodoMVC::handleRemoveTodoItem
+        section("todoapp") {
+            div {
+                header("header") {
+                    h1 { +"todos" }
+                }
+                section("main") {
+                    ul("todo-list") {
+                        for ((i, t) in state.todos.withIndex())
+                            TodoItem {
+                                id = i
+                                text = t
+                                appendTodoItem = this@TodoMVC::handleAppendTodoItem
+                                updateTodoItem = this@TodoMVC::handleUpdateTodoItem
+                                removeTodoItem = this@TodoMVC::handleRemoveTodoItem
+                            }
                     }
+                }
             }
         }
     }

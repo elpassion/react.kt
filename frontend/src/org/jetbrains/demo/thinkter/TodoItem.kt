@@ -17,16 +17,16 @@ class TodoItem : ReactDOMComponent<TodoItem.Props, ReactComponentNoState>() {
     override fun ReactDOMBuilder.render() {
         li {
             input {
+                classes = setOf("edit")
                 value = props.text
-                type = InputType.text
                 onChangeFunction = { props.updateTodoItem(props.id, it.inputValue) }
             }
             button {
-                +"X"
+                classes = setOf("destroy")
                 onClickFunction = { props.removeTodoItem(props.id) }
             }
             button {
-                +"+"
+                classes = setOf("destroy", "add")
                 onClickFunction = { props.appendTodoItem(props.id) }
             }
         }
