@@ -31,6 +31,10 @@ class TodoMVC : ReactDOMComponent<ReactComponentNoProps, TodoMVC.State>() {
         }
     }
 
+    val chars get() = state.todos.map { it.size }.sum()
+
+    val status get() = "elements:${state.todos.size} chars:$chars"
+
     override fun ReactDOMBuilder.render() {
         section("todoapp") {
             div {
@@ -49,7 +53,7 @@ class TodoMVC : ReactDOMComponent<ReactComponentNoProps, TodoMVC.State>() {
                             }
                     }
                 }
-                footer("footer") { +"todo: some status info..." }
+                footer("footer") { +status }
             }
         }
     }

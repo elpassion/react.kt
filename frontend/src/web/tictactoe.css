@@ -4,6 +4,11 @@
   display: table;
 }
 
+.title {
+    text-align: center;
+    color: blue;
+}
+
 .square {
     background: #fff;
     border: 1px solid #999;

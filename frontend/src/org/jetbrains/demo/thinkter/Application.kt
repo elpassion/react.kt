@@ -21,6 +21,11 @@ fun main(args: Array<String>) {
                         td("tic") { TicTacToeApp {} }
                         td("tic") { TicTacToeApp {} }
                     }
+                    tr {
+                        td("tic") { TicTacToeApp {} }
+                        td("tic") { TicTacToeApp {} }
+                        td("tic") { TicTacToeApp {} }
+                    }
                 }
             }
             TodoMVC {}

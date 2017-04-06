@@ -1,7 +1,6 @@
 package org.jetbrains.demo.tictactoe
 
 import kotlinx.html.div
-import kotlinx.html.h1
 import react.RState
 import react.ReactComponentNoProps
 import react.ReactComponentSpec
