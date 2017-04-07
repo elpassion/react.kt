@@ -30,18 +30,12 @@ function generateUUID() { // Public Domain/MIT
     });
 }
 
-function writeTodoListState(uuid, state) {
-    dbref.child(uuid).set({
-        type: 'todo-list',
-        state: state
-    });
+function writeTodoListState(id, state) {
+    dbref.child("todo-list-" + id).set(state);
 }
 
-function writeTicTacToeState(uuid, state) {
-    dbref.child(uuid).set({
-        type: 'tic-tac-toe',
-        state: state
-    });
+function writeTicTacToeState(id, state) {
+    dbref.child("tic-tac-toe-" + id).set(state);
 }
 
 dbref.on("value", firebase_callback);

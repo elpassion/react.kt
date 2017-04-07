@@ -29,19 +29,19 @@ class Application : ReactDOMComponent<ReactComponentNoProps, ReactComponentNoSta
             table {
                 tbody {
                     tr {
-                        td("tic") { TicTacToe { id = 1; uuid = generateUUID() } }
-                        td("tic") { TicTacToe { id = 2; uuid = generateUUID() } }
-                        td("tic") { TicTacToe { id = 3; uuid = generateUUID() } }
+                        td("tic") { TicTacToe { id = 1 } }
+                        td("tic") { TicTacToe { id = 2 } }
+                        td("tic") { TicTacToe { id = 3 } }
                     }
                     tr {
-                        td("tic") { TicTacToe { id = 4; uuid = generateUUID() } }
-                        td("tic") { TicTacToe { id = 5; uuid = generateUUID() } }
-                        td("tic") { TicTacToe { id = 6; uuid = generateUUID() } }
+                        td("tic") { TicTacToe { id = 4 } }
+                        td("tic") { TicTacToe { id = 5 } }
+                        td("tic") { TicTacToe { id = 6 } }
                     }
                 }
             }
-            TodoMVC { uuid = generateUUID() }
-            TodoMVC { uuid = generateUUID() }
+            TodoMVC { id = 1 }
+            TodoMVC { id = 2 }
         }
     }
 

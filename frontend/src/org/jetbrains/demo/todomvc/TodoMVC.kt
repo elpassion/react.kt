@@ -61,12 +61,12 @@ class TodoMVC : ReactDOMComponent<TodoMVC.Props, TodoMVC.State>() {
     }
 
     private fun writeToFirebase() {
-        writeTodoListState(props.uuid, state.todos.toTypedArray())
+        writeTodoListState(props.id.toString(), state.todos.toTypedArray())
     }
 
-    class Props(var uuid: String) : RProps()
+    class Props(var id: Int) : RProps()
 
     class State(var todos: List<String>) : RState
 }
 
-external fun writeTodoListState(uuid: String, state: Array<String>)
+external fun writeTodoListState(id: String, state: Array<String>)
