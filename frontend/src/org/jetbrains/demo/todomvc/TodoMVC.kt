@@ -15,7 +15,6 @@ class TodoMVC : ReactDOMComponent<TodoMVC.Props, TodoMVC.State>() {
     init {
         state = State(emptyList())
         subscribeToTodoListState(props.id.toString()) {
-            println(it)
             setState { todos = it.`val`().toList() }
         }
     }
