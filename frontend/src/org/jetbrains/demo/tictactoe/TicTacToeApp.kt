@@ -1,8 +1,8 @@
 package org.jetbrains.demo.tictactoe
 
 import kotlinx.html.div
+import react.RProps
 import react.RState
-import react.ReactComponentNoProps
 import react.ReactComponentSpec
 import react.dom.ReactDOMBuilder
 import react.dom.ReactDOMComponent
@@ -18,13 +18,13 @@ val LINES = arrayOf(
         intArrayOf(2, 4, 6)
 )
 
-class TicTacToeApp : ReactDOMComponent<ReactComponentNoProps, TicTacToeState>() {
-    companion object : ReactComponentSpec<TicTacToeApp, ReactComponentNoProps, TicTacToeState>
+class TicTacToeApp : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
+    companion object : ReactComponentSpec<TicTacToeApp, TicTacToeProps, TicTacToeState>
 
     override fun ReactDOMBuilder.render() {
         div("game") {
             div("title") {
-                +"Tic Tac Toe"
+                +"Board ${props.id}"
             }
             div("board") {
                 Board {
@@ -48,7 +48,7 @@ class TicTacToeApp : ReactDOMComponent<ReactComponentNoProps, TicTacToeState>() 
             }
             render()
             val result = calculateWinner(current.squares)
-            if (result == null) {
+            if (result == ' ') {
                 val next = if (state.xIsNext) 'O' else 'X'
                 println("Next player: " + next)
             } else {
@@ -71,6 +71,8 @@ fun calculateWinner(squares: CharArray): Char? {
     }
     return null
 }
+
+class TicTacToeProps(var id: Int) : RProps()
 
 class TicTacToeState(var history: Array<History>, var stepNumber: Int, var xIsNext: Boolean) : RState
 

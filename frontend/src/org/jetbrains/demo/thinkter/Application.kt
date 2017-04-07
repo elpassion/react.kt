@@ -14,17 +14,20 @@ fun main(args: Array<String>) {
 
     ReactDOM.render(document.getElementById("content")) {
         div {
+            h2("tic") {
+                +"Tic Tac Toe"
+            }
             table {
                 tbody {
                     tr {
-                        td("tic") { TicTacToeApp {} }
-                        td("tic") { TicTacToeApp {} }
-                        td("tic") { TicTacToeApp {} }
+                        td("tic") { TicTacToeApp { id = 1 } }
+                        td("tic") { TicTacToeApp { id = 2 } }
+                        td("tic") { TicTacToeApp { id = 3 } }
                     }
                     tr {
-                        td("tic") { TicTacToeApp {} }
-                        td("tic") { TicTacToeApp {} }
-                        td("tic") { TicTacToeApp {} }
+                        td("tic") { TicTacToeApp { id = 4 } }
+                        td("tic") { TicTacToeApp { id = 5 } }
+                        td("tic") { TicTacToeApp { id = 6 } }
                     }
                 }
             }
