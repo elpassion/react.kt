@@ -31,8 +31,8 @@ fun main(args: Array<String>) {
                     }
                 }
             }
-            TodoMVC {}
-            TodoMVC {}
+            TodoMVC { uuid = generateUUID() }
+            TodoMVC { uuid = generateUUID() }
         }
     }
 }
@@ -179,3 +179,5 @@ class ApplicationPageState(var selected: MainView, var currentUser: User? = null
 class UserProps : RProps() {
     var userAssigned: (User) -> Unit = {}
 }
+
+external fun generateUUID(): String

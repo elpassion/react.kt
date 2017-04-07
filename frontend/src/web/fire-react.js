@@ -18,7 +18,7 @@ function firebase_callback(snapshot) {
     snapshot.forEach(firebase_element_callback);
 }
 
-function generateUUID () { // Public Domain/MIT
+function generateUUID() { // Public Domain/MIT
     var d = new Date().getTime();
     if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
         d += performance.now(); //use high-precision timer if available
@@ -30,15 +30,15 @@ function generateUUID () { // Public Domain/MIT
     });
 }
 
-function writeTodoListState(id, state) {
-    dbref.child(1).set({
+function writeTodoListState(uuid, state) {
+    dbref.child(uuid).set({
         type: 'todo-list',
         state: state
     });
 }
 
-function writeTicTacToeState(id, state) {
-    dbref.child(1).set({
+function writeTicTacToeState(uuid, state) {
+    dbref.child(uuid).set({
         type: 'tic-tac-toe',
         state: state
     });

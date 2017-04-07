@@ -1,15 +1,14 @@
 package org.jetbrains.demo.todomvc
 
 import kotlinx.html.*
-import org.jetbrains.demo.todomvc.TodoItem
+import react.RProps
 import react.RState
-import react.ReactComponentNoProps
 import react.ReactComponentSpec
 import react.dom.ReactDOMBuilder
 import react.dom.ReactDOMComponent
 
-class TodoMVC : ReactDOMComponent<ReactComponentNoProps, TodoMVC.State>() {
-    companion object : ReactComponentSpec<TodoMVC, ReactComponentNoProps, State>
+class TodoMVC : ReactDOMComponent<TodoMVC.Props, TodoMVC.State>() {
+    companion object : ReactComponentSpec<TodoMVC, Props, State>
 
     init {
         state = State(listOf("eat", "write code", "eat some more", "write more code", "sleep", "repeat"))
@@ -17,12 +16,12 @@ class TodoMVC : ReactDOMComponent<ReactComponentNoProps, TodoMVC.State>() {
 
     fun handleAppendTodoItem(nr: Int) {
         setState { todos = state.todos.slice(0..nr) + listOf("") + state.todos.slice(nr + 1..state.todos.size - 1) }
-        writeTodoListState(nr.toString(), state.todos.toTypedArray())
+        writeToFirebase()
     }
 
     fun handleUpdateTodoItem(nr: Int, text: String) {
         setState { todos = state.todos.slice(0..nr - 1) + listOf(text) + state.todos.slice(nr + 1..state.todos.size - 1) }
-        writeTodoListState(nr.toString(), state.todos.toTypedArray())
+        writeToFirebase()
     }
 
     fun handleRemoveTodoItem(nr: Int) {
@@ -31,7 +30,7 @@ class TodoMVC : ReactDOMComponent<ReactComponentNoProps, TodoMVC.State>() {
                     if (state.todos.size <= 1) listOf("")
                     else state.todos.slice(0..nr - 1) + state.todos.slice(nr + 1..state.todos.size - 1)
         }
-        writeTodoListState(nr.toString(), state.todos.toTypedArray())
+        writeToFirebase()
     }
 
     val chars get() = state.todos.map { it.size }.sum()
@@ -61,8 +60,13 @@ class TodoMVC : ReactDOMComponent<ReactComponentNoProps, TodoMVC.State>() {
         }
     }
 
+    private fun writeToFirebase() {
+        writeTodoListState(props.uuid, state.todos.toTypedArray())
+    }
+
+    class Props(var uuid: String) : RProps()
 
     class State(var todos: List<String>) : RState
 }
 
-external fun writeTodoListState(id: String, state: Array<String>)
+external fun writeTodoListState(uuid: String, state: Array<String>)
