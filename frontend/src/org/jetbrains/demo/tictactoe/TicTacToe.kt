@@ -26,11 +26,16 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
     companion object : ReactComponentSpec<TicTacToe, TicTacToeProps, TicTacToeState>
 
     val initHistory get() = History(CharArray(9) { ' ' })
+    val xIsNext get() = state.history.last().squares.map {
+        when (it) {
+            'X' -> -1
+            'O' -> 1
+            else -> 0
+        }
+    }.sum() > 0
 
     init {
-        state = TicTacToeState(Array(9, {
-            initHistory
-        }), 0, true)
+        state = TicTacToeState(Array(9, { initHistory }), 0)
 
         subscribeToTicTacToeState(props.id.toString()) {
             setState {
@@ -41,7 +46,7 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
     }
 
     val details: String get() = if (winner == ' ') {
-        "Next player: " + if (state.xIsNext) 'X' else 'O'
+        "Next player: " + if (xIsNext) 'X' else 'O'
     } else "Winner: " + winner
 
     val winner: Char get() = calculateWinner(state.history.last().squares)
@@ -78,12 +83,11 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
             val newHistory = state.history.sliceArray(0..state.stepNumber + 1)
             val current = newHistory.last()
             val squares = current.squares.copyOf()
-            squares[i] = if (state.xIsNext) 'X' else 'O'
+            squares[i] = if (xIsNext) 'X' else 'O'
 
             setState {
                 history = newHistory.apply { last().squares = squares }
                 stepNumber = newHistory.size
-                xIsNext = !state.xIsNext
             }
             writeTicTacToeState(props.id.toString(), squares.map(Char::toString).toTypedArray())
         }
@@ -101,6 +105,6 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
 
 class TicTacToeProps(var id: Int) : RProps()
 
-class TicTacToeState(var history: Array<History>, var stepNumber: Int, var xIsNext: Boolean) : RState
+class TicTacToeState(var history: Array<History>, var stepNumber: Int) : RState
 
 class History(var squares: CharArray)
