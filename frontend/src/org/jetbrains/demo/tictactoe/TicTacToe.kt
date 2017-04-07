@@ -24,6 +24,16 @@ val LINES = arrayOf(
 class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
     companion object : ReactComponentSpec<TicTacToe, TicTacToeProps, TicTacToeState>
 
+    init {
+        state = TicTacToeState(Array(9, { History(CharArray(9) { ' ' }) }), 0, true)
+
+        subscribeToTicTacToeState(props.id.toString()) {
+            setState {
+                val strings = it.`val`()
+                history = arrayOf(History(strings.map { it: String -> it.first() }.toCharArray())) }
+        }
+    }
+
     val details: String get() = if (winner == ' ') {
         "Next player: " + if (state.xIsNext) 'X' else 'O'
     } else "Winner: " + winner
@@ -62,10 +72,6 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
                 }*/
             }
         }
-    }
-
-    init {
-        state = TicTacToeState(Array(9, { History(CharArray(9) { ' ' }) }), 0, true)
     }
 
     private fun handleClick(i: Int) {
