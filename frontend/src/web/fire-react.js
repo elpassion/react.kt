@@ -8,7 +8,7 @@ var config = {
     messagingSenderId: "182183482939"
 };
 firebase.initializeApp(config);
-var dbref = firebase.database().ref().child('todo-state');
+var db = firebase.database().ref();
 
 function firebase_element_callback(element) {
     console.log(element.val());
@@ -31,11 +31,11 @@ function generateUUID() { // Public Domain/MIT
 }
 
 function writeTodoListState(id, state) {
-    dbref.child("todo-list-" + id).set(state);
+    db.child("todo-list").child(id).set(state);
 }
 
 function writeTicTacToeState(id, state) {
-    dbref.child("tic-tac-toe-" + id).set(state);
+    db.child("tic-tac-toe").child(id).set(state);
 }
 
-dbref.on("value", firebase_callback);
+db.on("value", firebase_callback);
