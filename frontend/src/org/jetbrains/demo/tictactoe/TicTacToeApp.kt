@@ -24,13 +24,16 @@ class TicTacToeApp : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
     override fun ReactDOMBuilder.render() {
         div("game") {
             div("title") {
-                +"Board ${props.id}"
+                + "Board ${props.id}"
             }
             div("board") {
                 Board {
                     squares = state.history.last().squares
                     onClick = { handleClick(it) }
                 }
+            }
+            div("details") {
+                + state.details
             }
         }
     }
@@ -41,25 +44,26 @@ class TicTacToeApp : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
             val current = history.last()
             val squares = current.squares.copyOf()
             squares[i] = if (state.xIsNext) 'X' else 'O'
+            val result = calculateWinner(current.squares)
+            val log = if (result == ' ') {
+                val next = if (state.xIsNext) 'O' else 'X'
+                "Next player: " + next
+            } else {
+                //TODO: End game
+                "Winner: " + result
+            }
             setState {
                 this.history = history.apply { last().squares = squares }
                 stepNumber = history.size
                 xIsNext = !state.xIsNext
+                details = log
             }
             render()
-            val result = calculateWinner(current.squares)
-            if (result == ' ') {
-                val next = if (state.xIsNext) 'O' else 'X'
-                println("Next player: " + next)
-            } else {
-                println("Winner: " + result)
-                //TODO: End game
-            }
         }
     }
 
     init {
-        state = TicTacToeState(Array(9, { History(CharArray(9) { ' ' }) }), 0, true)
+        state = TicTacToeState(Array(9, { History(CharArray(9) { ' ' }) }), 0, true, "Next player: X")
     }
 }
 
@@ -74,6 +78,6 @@ fun calculateWinner(squares: CharArray): Char? {
 
 class TicTacToeProps(var id: Int) : RProps()
 
-class TicTacToeState(var history: Array<History>, var stepNumber: Int, var xIsNext: Boolean) : RState
+class TicTacToeState(var history: Array<History>, var stepNumber: Int, var xIsNext: Boolean, var details: String) : RState
 
 class History(var squares: CharArray)
