@@ -1,6 +1,9 @@
 package org.jetbrains.demo.tictactoe
 
 import kotlinx.html.div
+import org.jetbrains.firebase.subscribeToTicTacToeState
+import org.jetbrains.firebase.subscribeToTodoListState
+import org.jetbrains.firebase.writeTicTacToeState
 import react.RProps
 import react.RState
 import react.ReactComponentSpec
@@ -98,8 +101,6 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
         }
     }
 }
-
-external fun writeTicTacToeState(id: String, state: Array<String>)
 
 class TicTacToeProps(var id: Int) : RProps()
 

@@ -1,6 +1,8 @@
 package org.jetbrains.demo.todomvc
 
 import kotlinx.html.*
+import org.jetbrains.firebase.subscribeToTodoListState
+import org.jetbrains.firebase.writeTodoListState
 import react.RProps
 import react.RState
 import react.ReactComponentSpec
@@ -12,6 +14,10 @@ class TodoMVC : ReactDOMComponent<TodoMVC.Props, TodoMVC.State>() {
 
     init {
         state = State(listOf("eat", "write code", "eat some more", "write more code", "sleep", "repeat"))
+        subscribeToTodoListState(props.id.toString()) {
+            println(it)
+            setState { todos = it.`val`().toList() }
+        }
     }
 
     fun handleAppendTodoItem(nr: Int) {
@@ -68,5 +74,3 @@ class TodoMVC : ReactDOMComponent<TodoMVC.Props, TodoMVC.State>() {
 
     class State(var todos: List<String>) : RState
 }
-
-external fun writeTodoListState(id: String, state: Array<String>)
