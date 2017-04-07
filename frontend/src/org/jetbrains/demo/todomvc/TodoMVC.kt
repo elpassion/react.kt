@@ -17,10 +17,12 @@ class TodoMVC : ReactDOMComponent<ReactComponentNoProps, TodoMVC.State>() {
 
     fun handleAppendTodoItem(nr: Int) {
         setState { todos = state.todos.slice(0..nr) + listOf("") + state.todos.slice(nr + 1..state.todos.size - 1) }
+        writeTodoListState(nr.toString(), state.todos.toTypedArray())
     }
 
     fun handleUpdateTodoItem(nr: Int, text: String) {
         setState { todos = state.todos.slice(0..nr - 1) + listOf(text) + state.todos.slice(nr + 1..state.todos.size - 1) }
+        writeTodoListState(nr.toString(), state.todos.toTypedArray())
     }
 
     fun handleRemoveTodoItem(nr: Int) {
@@ -29,6 +31,7 @@ class TodoMVC : ReactDOMComponent<ReactComponentNoProps, TodoMVC.State>() {
                     if (state.todos.size <= 1) listOf("")
                     else state.todos.slice(0..nr - 1) + state.todos.slice(nr + 1..state.todos.size - 1)
         }
+        writeTodoListState(nr.toString(), state.todos.toTypedArray())
     }
 
     val chars get() = state.todos.map { it.size }.sum()
@@ -61,3 +64,5 @@ class TodoMVC : ReactDOMComponent<ReactComponentNoProps, TodoMVC.State>() {
 
     class State(var todos: List<String>) : RState
 }
+
+external fun writeTodoListState(id: String, state: Array<String>)
