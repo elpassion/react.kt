@@ -13,7 +13,7 @@ class TodoMVC : ReactDOMComponent<TodoMVC.Props, TodoMVC.State>() {
     companion object : ReactComponentSpec<TodoMVC, Props, State>
 
     init {
-        state = State(listOf("eat", "write code", "eat some more", "write more code", "sleep", "repeat"))
+        state = State(emptyList())
         subscribeToTodoListState(props.id.toString()) {
             println(it)
             setState { todos = it.`val`().toList() }
