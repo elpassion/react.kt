@@ -18,13 +18,19 @@ val LINES = arrayOf(
         intArrayOf(2, 4, 6)
 )
 
-class TicTacToeApp : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
-    companion object : ReactComponentSpec<TicTacToeApp, TicTacToeProps, TicTacToeState>
+class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
+    companion object : ReactComponentSpec<TicTacToe, TicTacToeProps, TicTacToeState>
+
+    val details: String get() = if (winner == ' ') {
+        "Next player: " + if (state.xIsNext) 'O' else 'X'
+    } else "Winner: " + winner
+
+    val winner: Char get() = calculateWinner(state.history.last().squares)
 
     override fun ReactDOMBuilder.render() {
         div("game") {
             div("title") {
-                + "Board ${props.id}"
+                +"Board ${props.id}"
             }
             div("board") {
                 Board {
@@ -33,51 +39,43 @@ class TicTacToeApp : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
                 }
             }
             div("details") {
-                + state.details
+                +details
             }
         }
     }
 
     private fun handleClick(i: Int) {
+        if (winner != ' ') return
         if (state.history.last().squares[i] == ' ') {
-            val history = state.history.sliceArray(0..state.stepNumber + 1)
-            val current = history.last()
+            val newHistory = state.history.sliceArray(0..state.stepNumber + 1)
+            val current = newHistory.last()
             val squares = current.squares.copyOf()
             squares[i] = if (state.xIsNext) 'X' else 'O'
-            val result = calculateWinner(current.squares)
-            val log = if (result == ' ') {
-                val next = if (state.xIsNext) 'O' else 'X'
-                "Next player: " + next
-            } else {
-                //TODO: End game
-                "Winner: " + result
-            }
+
             setState {
-                this.history = history.apply { last().squares = squares }
-                stepNumber = history.size
+                history = newHistory.apply { last().squares = squares }
+                stepNumber = newHistory.size
                 xIsNext = !state.xIsNext
-                details = log
             }
-            render()
         }
     }
 
     init {
-        state = TicTacToeState(Array(9, { History(CharArray(9) { ' ' }) }), 0, true, "Next player: X")
+        state = TicTacToeState(Array(9, { History(CharArray(9) { ' ' }) }), 0, true)
     }
 }
 
-fun calculateWinner(squares: CharArray): Char? {
+fun calculateWinner(squares: CharArray): Char {
     LINES.forEach { (a, b, c) ->
         if (squares[a] == squares[b] && squares[a] == squares[c]) {
             return squares[a]
         }
     }
-    return null
+    return ' '
 }
 
 class TicTacToeProps(var id: Int) : RProps()
 
-class TicTacToeState(var history: Array<History>, var stepNumber: Int, var xIsNext: Boolean, var details: String) : RState
+class TicTacToeState(var history: Array<History>, var stepNumber: Int, var xIsNext: Boolean) : RState
 
 class History(var squares: CharArray)

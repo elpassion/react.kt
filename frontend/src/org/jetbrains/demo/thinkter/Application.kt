@@ -3,7 +3,7 @@ package org.jetbrains.demo.thinkter
 import kotlinx.html.*
 import kotlinx.html.js.*
 import org.jetbrains.demo.thinkter.model.*
-import org.jetbrains.demo.tictactoe.TicTacToeApp
+import org.jetbrains.demo.tictactoe.TicTacToe
 import org.jetbrains.demo.todomvc.TodoMVC
 import react.*
 import react.dom.*
@@ -20,14 +20,14 @@ fun main(args: Array<String>) {
             table {
                 tbody {
                     tr {
-                        td("tic") { TicTacToeApp { id = 1 } }
-                        td("tic") { TicTacToeApp { id = 2 } }
-                        td("tic") { TicTacToeApp { id = 3 } }
+                        td("tic") { TicTacToe { id = 1 } }
+                        td("tic") { TicTacToe { id = 2 } }
+                        td("tic") { TicTacToe { id = 3 } }
                     }
                     tr {
-                        td("tic") { TicTacToeApp { id = 4 } }
-                        td("tic") { TicTacToeApp { id = 5 } }
-                        td("tic") { TicTacToeApp { id = 6 } }
+                        td("tic") { TicTacToe { id = 4 } }
+                        td("tic") { TicTacToe { id = 5 } }
+                        td("tic") { TicTacToe { id = 6 } }
                     }
                 }
             }
