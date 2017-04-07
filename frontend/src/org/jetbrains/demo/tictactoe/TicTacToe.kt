@@ -22,12 +22,13 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
     companion object : ReactComponentSpec<TicTacToe, TicTacToeProps, TicTacToeState>
 
     val details: String get() = if (winner == ' ') {
-        "Next player: " + if (state.xIsNext) 'O' else 'X'
+        "Next player: " + if (state.xIsNext) 'X' else 'O'
     } else "Winner: " + winner
 
     val winner: Char get() = calculateWinner(state.history.last().squares)
 
     override fun ReactDOMBuilder.render() {
+        //val desc = "Step " + state.stepNumber
         div("game") {
             div("title") {
                 +"Board ${props.id}"
@@ -38,10 +39,30 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
                     onClick = { handleClick(it) }
                 }
             }
-            div("details") {
-                +details
+            div {
+                div("details") {
+                    +details
+                }
+                /*ol {
+                    state.history.mapIndexed { index, history ->
+                        li {
+                            key = index.toString()
+                            a {
+                                + desc
+                                onClickFunction = {
+                                    jumpTo(index)
+                                }
+                            }
+                        }
+
+                    }
+                }*/
             }
         }
+    }
+
+    init {
+        state = TicTacToeState(Array(9, { History(CharArray(9) { ' ' }) }), 0, true)
     }
 
     private fun handleClick(i: Int) {
@@ -61,18 +82,21 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
         }
     }
 
-    init {
-        state = TicTacToeState(Array(9, { History(CharArray(9) { ' ' }) }), 0, true)
+    private fun calculateWinner(squares: CharArray): Char {
+        LINES.forEach { (a, b, c) ->
+            if (squares[a] == squares[b] && squares[a] == squares[c]) {
+                return squares[a]
+            }
+        }
+        return ' '
     }
-}
 
-fun calculateWinner(squares: CharArray): Char {
-    LINES.forEach { (a, b, c) ->
-        if (squares[a] == squares[b] && squares[a] == squares[c]) {
-            return squares[a]
+    private fun jumpTo(step: Int) {
+        setState {
+            stepNumber = step
+            xIsNext = step % 2 != 0
         }
     }
-    return ' '
 }
 
 external fun writeTicTacToeState(id: String, state: Array<String>)
