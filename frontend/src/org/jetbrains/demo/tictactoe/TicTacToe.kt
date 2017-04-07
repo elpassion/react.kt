@@ -1,11 +1,9 @@
 package org.jetbrains.demo.tictactoe
 
-import kotlinx.html.a
 import kotlinx.html.button
 import kotlinx.html.div
 import kotlinx.html.js.onClickFunction
 import org.jetbrains.firebase.subscribeToTicTacToeState
-import org.jetbrains.firebase.subscribeToTodoListState
 import org.jetbrains.firebase.writeTicTacToeState
 import react.RProps
 import react.RState
@@ -49,7 +47,6 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
     val winner: Char get() = calculateWinner(state.history.last().squares)
 
     override fun ReactDOMBuilder.render() {
-        //val desc = "Step " + state.stepNumber
         div("game") {
             div("title") {
                 +"Board ${props.id}"
@@ -71,20 +68,6 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
                         writeTicTacToeState(props.id.toString(), initHistory.squares.map(Char::toString).toTypedArray())
                     }
                 }
-                /*ol {
-                    state.history.mapIndexed { index, history ->
-                        li {
-                            key = index.toString()
-                            a {
-                                + desc
-                                onClickFunction = {
-                                    jumpTo(index)
-                                }
-                            }
-                        }
-
-                    }
-                }*/
             }
         }
     }
@@ -113,13 +96,6 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
             }
         }
         return ' '
-    }
-
-    private fun jumpTo(step: Int) {
-        setState {
-            stepNumber = step
-            xIsNext = step % 2 != 0
-        }
     }
 }
 
