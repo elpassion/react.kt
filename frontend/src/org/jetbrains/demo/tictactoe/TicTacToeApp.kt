@@ -59,7 +59,7 @@ class TicTacToeApp : ReactDOMComponent<ReactComponentNoProps, TicTacToeState>() 
     }
 
     init {
-        state = TicTacToeState(Array(9, { History(charArrayOf(' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ')) }), 0, true)
+        state = TicTacToeState(Array(9, { History(CharArray(9) { ' ' }) }), 0, true)
     }
 }
 
