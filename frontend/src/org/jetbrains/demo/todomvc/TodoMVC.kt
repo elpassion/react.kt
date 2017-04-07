@@ -21,13 +21,17 @@ class TodoMVC : ReactDOMComponent<TodoMVC.Props, TodoMVC.State>() {
     }
 
     fun handleAppendTodoItem(nr: Int) {
-        setState { todos = state.todos.slice(0..nr) + listOf("") + state.todos.slice(nr + 1..state.todos.size - 1) }
-        writeToFirebase()
+        setState {
+            todos = state.todos.slice(0..nr) + listOf("") + state.todos.slice(nr + 1..state.todos.size - 1)
+            writeToFirebase(todos)
+        }
     }
 
     fun handleUpdateTodoItem(nr: Int, text: String) {
-        setState { todos = state.todos.slice(0..nr - 1) + listOf(text) + state.todos.slice(nr + 1..state.todos.size - 1) }
-        writeToFirebase()
+        setState {
+            todos = state.todos.slice(0..nr - 1) + listOf(text) + state.todos.slice(nr + 1..state.todos.size - 1)
+            writeToFirebase(todos)
+        }
     }
 
     fun handleRemoveTodoItem(nr: Int) {
@@ -35,8 +39,8 @@ class TodoMVC : ReactDOMComponent<TodoMVC.Props, TodoMVC.State>() {
             todos =
                     if (state.todos.size <= 1) listOf("")
                     else state.todos.slice(0..nr - 1) + state.todos.slice(nr + 1..state.todos.size - 1)
+            writeToFirebase(todos)
         }
-        writeToFirebase()
     }
 
     val chars get() = state.todos.map { it.size }.sum()
@@ -66,8 +70,8 @@ class TodoMVC : ReactDOMComponent<TodoMVC.Props, TodoMVC.State>() {
         }
     }
 
-    private fun writeToFirebase() {
-        writeTodoListState(props.id.toString(), state.todos.toTypedArray())
+    private fun writeToFirebase(todos: List<String>) {
+        writeTodoListState(props.id.toString(), todos.toTypedArray())
     }
 
     class Props(var id: Int) : RProps()
