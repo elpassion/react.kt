@@ -68,6 +68,7 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
                     +"reset"
                     onClickFunction = {
                         setState { history = arrayOf(initHistory) }
+                        writeTicTacToeState(props.id.toString(), initHistory.squares.map(Char::toString).toTypedArray())
                     }
                 }
                 /*ol {
