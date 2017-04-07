@@ -1,6 +1,9 @@
 package org.jetbrains.demo.tictactoe
 
+import kotlinx.html.a
+import kotlinx.html.button
 import kotlinx.html.div
+import kotlinx.html.js.onClickFunction
 import org.jetbrains.firebase.subscribeToTicTacToeState
 import org.jetbrains.firebase.subscribeToTodoListState
 import org.jetbrains.firebase.writeTicTacToeState
@@ -24,13 +27,18 @@ val LINES = arrayOf(
 class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
     companion object : ReactComponentSpec<TicTacToe, TicTacToeProps, TicTacToeState>
 
+    val initHistory get() = History(CharArray(9) { ' ' })
+
     init {
-        state = TicTacToeState(Array(9, { History(CharArray(9) { ' ' }) }), 0, true)
+        state = TicTacToeState(Array(9, {
+            initHistory
+        }), 0, true)
 
         subscribeToTicTacToeState(props.id.toString()) {
             setState {
                 val strings = it.`val`()
-                history = arrayOf(History(strings.map { it: String -> it.first() }.toCharArray())) }
+                history = arrayOf(History(strings.map { it: String -> it.first() }.toCharArray()))
+            }
         }
     }
 
@@ -55,6 +63,12 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
             div {
                 div("details") {
                     +details
+                }
+                button {
+                    +"reset"
+                    onClickFunction = {
+                        setState { history = arrayOf(initHistory) }
+                    }
                 }
                 /*ol {
                     state.history.mapIndexed { index, history ->
