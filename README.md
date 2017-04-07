@@ -2,3 +2,5 @@
 
 * Tic-tac-toe game + Todo List app written in **Kotlin** using React and kotlin-frontend-plugin.
 * Integration with Firebase.
+
+<img src="readme/screen.png" width="560px">
