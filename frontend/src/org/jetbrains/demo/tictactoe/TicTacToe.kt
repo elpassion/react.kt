@@ -57,6 +57,7 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
                 stepNumber = newHistory.size
                 xIsNext = !state.xIsNext
             }
+            writeTicTacToeState(props.uuid, squares.map(Char::toString).toTypedArray())
         }
     }
 
@@ -74,7 +75,9 @@ fun calculateWinner(squares: CharArray): Char {
     return ' '
 }
 
-class TicTacToeProps(var id: Int) : RProps()
+external fun writeTicTacToeState(uuid: String, state: Array<String>)
+
+class TicTacToeProps(var id: Int, var uuid: String) : RProps()
 
 class TicTacToeState(var history: Array<History>, var stepNumber: Int, var xIsNext: Boolean) : RState
 
