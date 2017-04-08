@@ -18,9 +18,7 @@ class Square : ReactDOMComponent<Square.Props, ReactComponentNoState>() {
     override fun ReactDOMBuilder.render() {
         button(classes = "square") {
             +props.value.toString()
-            onClickFunction = {
-                props.onClick()
-            }
+            onClickFunction = { props.onClick() }
         }
     }
 
