@@ -4,12 +4,15 @@ import kotlinx.html.div
 import react.RProps
 import react.ReactComponentNoState
 import react.ReactComponentSpec
-import react.ReactElement
 import react.dom.ReactDOMBuilder
 import react.dom.ReactDOMComponent
 
-class Board : ReactDOMComponent<BoardProps, ReactComponentNoState>() {
-    companion object : ReactComponentSpec<Board, BoardProps, ReactComponentNoState>
+class Board : ReactDOMComponent<Board.Props, ReactComponentNoState>() {
+    companion object : ReactComponentSpec<Board, Props, ReactComponentNoState>
+
+    init {
+        state = ReactComponentNoState()
+    }
 
     override fun ReactDOMBuilder.render() {
         div {
@@ -31,17 +34,13 @@ class Board : ReactDOMComponent<BoardProps, ReactComponentNoState>() {
         }
     }
 
-    private fun ReactDOMBuilder.renderSquare(i: Int): ReactElement =
-            Square {
-                value = props.squares[i]
-                onClick = {
-                    props.onClick(i)
-                }
-            }
-
-    init {
-        state = ReactComponentNoState()
+    private fun ReactDOMBuilder.renderSquare(i: Int) = Square {
+        value = props.squares[i]
+        onClick = {
+            props.onClick(i)
+        }
     }
+
+    class Props(var squares: CharArray, var onClick: (Int) -> Unit) : RProps()
 }
 
-class BoardProps(var squares: CharArray, var onClick: (Int) -> Unit) : RProps()

@@ -8,8 +8,12 @@ import react.ReactComponentSpec
 import react.dom.ReactDOMBuilder
 import react.dom.ReactDOMComponent
 
-class Square : ReactDOMComponent<SquareProps, ReactComponentNoState>() {
-    companion object : ReactComponentSpec<Square, SquareProps, ReactComponentNoState>
+class Square : ReactDOMComponent<Square.Props, ReactComponentNoState>() {
+    companion object : ReactComponentSpec<Square, Props, ReactComponentNoState>
+
+    init {
+        state = ReactComponentNoState()
+    }
 
     override fun ReactDOMBuilder.render() {
         button(classes = "square") {
@@ -20,9 +24,6 @@ class Square : ReactDOMComponent<SquareProps, ReactComponentNoState>() {
         }
     }
 
-    init {
-        state = ReactComponentNoState()
-    }
+    class Props(var value: Char, var onClick: () -> Unit) : RProps()
 }
 
-class SquareProps(var value: Char, var onClick: () -> Unit) : RProps()

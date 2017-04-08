@@ -22,10 +22,22 @@ val LINES = arrayOf(
         intArrayOf(2, 4, 6)
 )
 
-class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
-    companion object : ReactComponentSpec<TicTacToe, TicTacToeProps, TicTacToeState>
+class TicTacToe : ReactDOMComponent<TicTacToe.Props, TicTacToe.State>() {
+    companion object : ReactComponentSpec<TicTacToe, TicTacToe.Props, TicTacToe.State>
+
+    init {
+        state = State(Array(9, { initHistory }), 0)
+
+        subscribeToTicTacToeState(props.id.toString()) {
+            setState {
+                val strings = it.`val`()
+                history = arrayOf(History(strings.map(String::first).toCharArray()))
+            }
+        }
+    }
 
     val initHistory get() = History(CharArray(9) { ' ' })
+
     val xIsNext get() = state.history.last().squares.map {
         when (it) {
             'X' -> -1
@@ -33,17 +45,6 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
             else -> 0
         }
     }.sum() > 0
-
-    init {
-        state = TicTacToeState(Array(9, { initHistory }), 0)
-
-        subscribeToTicTacToeState(props.id.toString()) {
-            setState {
-                val strings = it.`val`()
-                history = arrayOf(History(strings.map { it: String -> it.first() }.toCharArray()))
-            }
-        }
-    }
 
     val details: String get() = if (winner == ' ') {
         "Next player: " + if (xIsNext) 'X' else 'O'
@@ -101,10 +102,11 @@ class TicTacToe : ReactDOMComponent<TicTacToeProps, TicTacToeState>() {
         }
         return ' '
     }
+
+    class Props(var id: Int) : RProps()
+
+    class State(var history: Array<History>, var stepNumber: Int) : RState
 }
 
-class TicTacToeProps(var id: Int) : RProps()
-
-class TicTacToeState(var history: Array<History>, var stepNumber: Int) : RState
 
 class History(var squares: CharArray)
