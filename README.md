@@ -11,6 +11,11 @@ Then from the web browser go to:
 
 `http://localhost:8088/`
 
-Result:
+-------
+
+#####[Live demo](http://mareklangiewicz.pl/react.kt)
+
+
+#####Screenshot
 
 <img src="readme/screen.png" width="560px">
