@@ -13,9 +13,9 @@ Then from the web browser go to:
 
 -------
 
-#####[Live demo](http://mareklangiewicz.pl/react.kt)
+##### [Live demo](http://mareklangiewicz.pl/react.kt)
 
 
-#####Screenshot
+##### Screenshot
 
 <img src="readme/screen.png" width="560px">

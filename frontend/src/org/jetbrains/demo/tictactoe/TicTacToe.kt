@@ -19,7 +19,7 @@ class TicTacToe : ReactDOMComponent<TicTacToe.Props, TicTacToe.State>() {
 
         subscribeToTicTacToeState(props.id.toString()) {
             setState {
-                squares = it.`val`() ?: initSquares
+                squares = it ?: initSquares
             }
         }
     }
