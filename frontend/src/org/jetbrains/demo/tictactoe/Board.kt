@@ -29,6 +29,6 @@ class Board : ReactDOMComponent<Board.Props, ReactComponentNoState>() {
         onClick = { props.onClick(i) }
     }
 
-    class Props(var squares: CharArray, var onClick: (Int) -> Unit) : RProps()
+    class Props(var squares: Array<String>, var onClick: (Int) -> Unit) : RProps()
 }
 

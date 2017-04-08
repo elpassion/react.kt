@@ -19,5 +19,5 @@ fun subscribeToTicTacToeState(id: String, callback: (FirebaseUpdate) -> Unit) {
 }
 
 external class FirebaseUpdate {
-    fun `val`(): Array<String>
+    fun `val`(): Array<String>?
 }

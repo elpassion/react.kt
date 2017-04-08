@@ -15,31 +15,30 @@ class TicTacToe : ReactDOMComponent<TicTacToe.Props, TicTacToe.State>() {
     companion object : ReactComponentSpec<TicTacToe, TicTacToe.Props, TicTacToe.State>
 
     init {
-        state = State(Array(9, { initHistory }), 0)
+        state = State(initSquares)
 
         subscribeToTicTacToeState(props.id.toString()) {
             setState {
-                val strings = it.`val`()
-                history = arrayOf(History(strings.map(String::first).toCharArray()))
+                squares = it.`val`() ?: initSquares
             }
         }
     }
 
-    val initHistory get() = History(CharArray(9) { ' ' })
+    val initSquares get() = Array(9) { " " }
 
-    val xIsNext get() = state.history.last().squares.map {
+    val xIsNext get() = state.squares.map {
         when (it) {
-            'X' -> -1
-            'O' -> 1
+            "X" -> -1
+            "O" -> 1
             else -> 0
         }
     }.sum() > 0
 
-    val details: String get() = if (winner == ' ') {
+    val details get() = if (winner == " ") {
         "Next player: " + if (xIsNext) 'X' else 'O'
     } else "Winner: " + winner
 
-    val winner: Char get() = calculateWinner(state.history.last().squares)
+    val winner: String get() = calculateWinner(state.squares)
 
     override fun ReactDOMBuilder.render() {
         div("game") {
@@ -48,7 +47,7 @@ class TicTacToe : ReactDOMComponent<TicTacToe.Props, TicTacToe.State>() {
             }
             div("board") {
                 Board {
-                    squares = state.history.last().squares
+                    squares = state.squares
                     onClick = { handleClick(it) }
                 }
             }
@@ -59,8 +58,8 @@ class TicTacToe : ReactDOMComponent<TicTacToe.Props, TicTacToe.State>() {
                 button {
                     +"reset"
                     onClickFunction = {
-                        setState { history = arrayOf(initHistory) }
-                        writeTicTacToeState(props.id.toString(), initHistory.squares.map(Char::toString).toTypedArray())
+                        setState { squares = initSquares }
+                        writeTicTacToeState(props.id.toString(), initSquares)
                     }
                 }
             }
@@ -68,46 +67,34 @@ class TicTacToe : ReactDOMComponent<TicTacToe.Props, TicTacToe.State>() {
     }
 
     private fun handleClick(i: Int) {
-        if (winner != ' ') return
-        if (state.history.last().squares[i] == ' ') {
-            val newHistory = state.history.sliceArray(0..state.stepNumber + 1)
-            val current = newHistory.last()
-            val squares = current.squares.copyOf()
-            squares[i] = if (xIsNext) 'X' else 'O'
-
-            setState {
-                history = newHistory.apply { last().squares = squares }
-                stepNumber = newHistory.size
-            }
-            writeTicTacToeState(props.id.toString(), squares.map(Char::toString).toTypedArray())
+        if (winner != " ") return
+        val newSquares = state.squares.copyOf()
+        if (newSquares[i] == " ") {
+            newSquares[i] = if (xIsNext) "X" else "O"
+            setState { squares = newSquares }
+            writeTicTacToeState(props.id.toString(), newSquares)
         }
     }
 
-    private fun calculateWinner(squares: CharArray): Char {
-        WINNING_LINES.forEach { (a, b, c) ->
-            if (squares[a] != ' ' && squares[a] == squares[b] && squares[a] == squares[c]) {
+    private fun calculateWinner(squares: Array<String>): String {
+        val WINNING_LINES = arrayOf(
+                intArrayOf(0, 1, 2),
+                intArrayOf(3, 4, 5),
+                intArrayOf(6, 7, 8),
+                intArrayOf(0, 3, 6),
+                intArrayOf(1, 4, 7),
+                intArrayOf(2, 5, 8),
+                intArrayOf(0, 4, 8),
+                intArrayOf(2, 4, 6)
+        )
+        for ((a, b, c) in WINNING_LINES)
+            if (squares[a] != " " && squares[a] == squares[b] && squares[a] == squares[c])
                 return squares[a]
-            }
-        }
-        return ' '
+        return " "
     }
-
-    private val WINNING_LINES = arrayOf(
-            intArrayOf(0, 1, 2),
-            intArrayOf(3, 4, 5),
-            intArrayOf(6, 7, 8),
-            intArrayOf(0, 3, 6),
-            intArrayOf(1, 4, 7),
-            intArrayOf(2, 5, 8),
-            intArrayOf(0, 4, 8),
-            intArrayOf(2, 4, 6)
-    )
 
 
     class Props(var id: Int) : RProps()
 
-    class State(var history: Array<History>, var stepNumber: Int) : RState
+    class State(var squares: Array<String>) : RState
 }
-
-
-class History(var squares: CharArray)
