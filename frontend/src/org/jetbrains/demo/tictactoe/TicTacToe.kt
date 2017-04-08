@@ -85,7 +85,7 @@ class TicTacToe : ReactDOMComponent<TicTacToe.Props, TicTacToe.State>() {
 
     private fun calculateWinner(squares: CharArray): Char {
         WINNING_LINES.forEach { (a, b, c) ->
-            if (squares[a] == squares[b] && squares[a] == squares[c]) {
+            if (squares[a] != ' ' && squares[a] == squares[b] && squares[a] == squares[c]) {
                 return squares[a]
             }
         }
